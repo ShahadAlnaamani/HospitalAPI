@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace HospitalAPI.Services
 {
-    public class ClinicService
+    public class ClinicService : IClinicService
     {
         private readonly IClinicRepository _clinicRepository;
         private ApplicationDbContext _context;

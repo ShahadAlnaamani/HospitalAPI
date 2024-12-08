@@ -17,7 +17,7 @@ namespace HospitalAPI.Repos
 
         public bool PatientExists(string name) //checks if patient exists
         {
-            var patient = _context.Patients.Where(c => c.Name == name);
+           var  patient = _context.Patients.Where(c => c.Name == name);
 
             if (name == null) return false;
             else return true;

@@ -3,7 +3,7 @@ using HospitalAPI.Repos;
 
 namespace HospitalAPI.Services
 {
-    public class PatientService
+    public class PatientService : IPatientService
     {
         private readonly IPatientRepository _patientRepository;
         private ApplicationDbContext _context;
@@ -28,7 +28,7 @@ namespace HospitalAPI.Services
             var patientRepo = new PatientRepository(_context);
 
             bool exists = patientRepo.PatientExists(patient.Name);
-            if (exists) 
+            if (exists)
             {
                 throw new ArgumentException("<!>This patient already exists<!>");
             }
@@ -39,7 +39,7 @@ namespace HospitalAPI.Services
         public List<Patient> GetAllPatients()
         {
             var patients = _patientRepository.GetAllPatients()
-                .OrderBy(p=>p.Name)
+                .OrderBy(p => p.Name)
                 .ToList();
             if (patients == null || patients.Count == 0)
             {
