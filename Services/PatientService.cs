@@ -25,9 +25,8 @@ namespace HospitalAPI.Services
                 throw new ArgumentException("<!>Age must be a whole number<!>");
             }
 
-            var patientRepo = new PatientRepository(_context);
 
-            bool exists = patientRepo.PatientExists(patient.Name);
+            bool exists = _patientRepository.PatientExists(patient.Name);
             if (exists)
             {
                 throw new ArgumentException("<!>This patient already exists<!>");

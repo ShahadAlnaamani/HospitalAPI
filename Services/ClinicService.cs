@@ -27,9 +27,7 @@ namespace HospitalAPI.Services
                 throw new ArgumentException("Number of slots must be a whole number.");
             }
 
-            var clinicRepo = new ClinicRepository(_context);
-
-            bool exists = clinicRepo.ClinicExists(clinic.Specialization);
+            bool exists = _clinicRepository.ClinicExists(clinic.Specialization);
             if (exists)
             {
                 throw new ArgumentException("<!>This clinic already exists<!>");

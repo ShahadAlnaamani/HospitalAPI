@@ -18,7 +18,7 @@ namespace HospitalAPI.Repos
 
         public bool ClinicExists(string Specialization)
         {
-            var clinic = _context.Clinics.Where(c => c.Specialization == Specialization);
+            var clinic = _context.Clinics.Where(c => c.Specialization == Specialization).FirstOrDefault();
 
             if (clinic == null) return false;
             else return true;
