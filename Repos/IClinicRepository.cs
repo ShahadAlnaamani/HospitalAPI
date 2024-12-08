@@ -4,9 +4,9 @@ namespace HospitalAPI.Repos
 {
     public interface IClinicRepository
     {
-        bool AddClinc(string Specialization, int slots);
+        int AddClinc(Clinic clinic);
         List<Clinic> GetAllClinics();
-        bool GetClinic(string Specialization);
+        bool ClinicExists(string Specialization);
         int GetClinicID(string Specialization);
         int GetNextSlot(string Specialization);
     }

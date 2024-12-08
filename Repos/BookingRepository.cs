@@ -16,42 +16,11 @@ namespace HospitalAPI.Repos
             return _context.Bookings.ToList();
         }
 
-        public int Add(string PatientName, string ClinicSpecialization, DateOnly Date)
+        public int Add(Booking booking)
         {
-            PatientRepository patientRepo = new PatientRepository(_context);
-            ClinicRepository clinicRepo = new ClinicRepository(_context);
-
-
-            bool patientExists = patientRepo.PatientExists(PatientName);
-            if (patientExists) //found patient
-            {
-                int PatientID = patientRepo.GetPatientID(PatientName);
-                int TotalSlots = clinicRepo.GetNextSlot(ClinicSpecialization);
-
-                if (TotalSlots != 0) //found clinic
-                {
-                    //Calculating slot number 
-                    int clinicID = clinicRepo.GetClinicID(ClinicSpecialization);
-                    int TakenSlots = _context.Bookings.Count(b => b.CID == clinicID && b.Date == Date);
-                    int SlotNumber = TotalSlots - TakenSlots;
-
-                    //Creating new booking 
-                    var booking = new Booking { Date = Date, SlotNumber = SlotNumber, CID = clinicID, PID = PatientID };
-                    _context.Bookings.Add(booking);
-                    _context.SaveChanges();
-                    return 1; //Created successfully 
-                }
-
-                else
-                {
-                    return 2; //Invalid clinic  
-                }
-            }
-
-            else
-            {
-                return 0; //Invalid patient
-            }
+            _context.Bookings.Add(booking);
+            _context.SaveChanges();
+            return booking.SlotNumber;
         }
 
         public List<Booking> GetBookingsByDate(DateOnly Date)

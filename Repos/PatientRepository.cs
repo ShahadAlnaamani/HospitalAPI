@@ -24,18 +24,11 @@ namespace HospitalAPI.Repos
 
         }
 
-        public bool AddPatient(string name, int age, Gender gender)
+        public int AddPatient(Patient patient)
         {
-            bool exists = PatientExists(name);
-            if (!exists)
-            {
-                var patient = new Patient { Name = name, Age = age, Gender = gender };
                 _context.Patients.Add(patient);
                 _context.SaveChanges();
-                return true;
-            }
-
-            else { return false; }
+                return patient.PID;
         }
 
         public int GetPatientID(string name)

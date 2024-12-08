@@ -16,7 +16,7 @@ namespace HospitalAPI.Repos
             return _context.Clinics.ToList();
         }
 
-        public bool GetClinic(string Specialization)
+        public bool ClinicExists(string Specialization)
         {
             var clinic = _context.Clinics.Where(c => c.Specialization == Specialization);
 
@@ -25,18 +25,11 @@ namespace HospitalAPI.Repos
 
         }
 
-        public bool AddClinc(string Specialization, int slots)
+        public int AddClinc(Clinic clinic)
         {
-            bool exists = GetClinic(Specialization);
-            if (!exists)
-            {
-                var clinic = new Clinic { Specialization = Specialization, NumberofSlots = slots };
-                _context.Clinics.Add(clinic);
-                _context.SaveChanges();
-                return true;
-            }
-
-            else { return false; }
+            _context.Clinics.Add(clinic);
+            _context.SaveChanges();
+            return clinic.CID;
         }
 
         public int GetNextSlot(string Specialization)
@@ -46,8 +39,7 @@ namespace HospitalAPI.Repos
             if (clinic == null) return 0;
             else
             {
-                int TotalSlots = clinic.NumberofSlots;
-                return TotalSlots;
+                return clinic.NumberofSlots;
             };
         }
 
