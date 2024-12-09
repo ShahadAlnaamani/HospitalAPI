@@ -1,5 +1,6 @@
 ﻿using HospitalAPI.Models;
 using Microsoft.Extensions.FileProviders;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HospitalAPI.Repos
 {
@@ -23,7 +24,7 @@ namespace HospitalAPI.Repos
             return booking.SlotNumber;
         }
 
-        public List<Booking> GetBookingsByDate(DateOnly Date)
+        public List<Booking> GetBookingsByDate(DateTime Date)
         {
             return _context.Bookings.Where(b => b.Date == Date).ToList();
         }
@@ -31,6 +32,11 @@ namespace HospitalAPI.Repos
         public List<Booking> GetBookingsBySlot(int Slot)
         {
             return _context.Bookings.Where(b => b.SlotNumber == Slot).ToList();
+        }
+
+        public int GetTakenSlots(DateTime date, int clinicID)
+        {
+            return _context.Bookings.Count(b => b.CID == clinicID && b.Date == date);
         }
 
     }

@@ -1,9 +1,7 @@
 ﻿using HospitalAPI.Models;
-using HospitalAPI.Repos;
 using HospitalAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HospitalAPI.Controllers
 {
@@ -12,7 +10,6 @@ namespace HospitalAPI.Controllers
     public class BookingController : ControllerBase
     {
         private readonly IBookingService _bookingService;
-        private ApplicationDbContext _context;
 
         public BookingController(IBookingService bookingService)
         {
@@ -21,45 +18,29 @@ namespace HospitalAPI.Controllers
 
 
         [HttpPost("AddBooking")]
-        public IActionResult AddBooking(DateOnly date, string patientName, string clinicSpecialization )
+        public IActionResult AddBooking(DateTime date, string patientName, string clinicSpecialization )
         {
             try
             {
-                PatientRepository patientRepo = new PatientRepository(_context);
-                ClinicRepository clinicRepo = new ClinicRepository(_context);
+                int result = _bookingService.Validation(date,  patientName, clinicSpecialization);
 
-
-                bool patientExists = patientRepo.PatientExists(patientName);
-                if (patientExists) //found patient
+                switch (result)
                 {
-                    int PatientID = patientRepo.GetPatientID(patientName);
-                    int TotalSlots = clinicRepo.GetNextSlot(clinicSpecialization);
+                    case 0:
+                        return Ok(_bookingService.AddBooking(date, patientName, clinicSpecialization));
 
-                    if (TotalSlots != 0) //found clinic
-                    {
-                        //Calculating slot number 
-                        int clinicID = clinicRepo.GetClinicID(clinicSpecialization);
-                        int TakenSlots = _context.Bookings.Count(b => b.CID == clinicID && b.Date == date);
-                        if (TakenSlots < TotalSlots)
-                        {
-                            int SlotNumber = TakenSlots + 1;
+                    case 1:
+                        return BadRequest("<!>Date must be in the future<!>");
 
-                            int newBookingId = _bookingService.AddBooking(new Booking
-                            {
-                                Date = date,
-                                SlotNumber = SlotNumber,
-                                PID = PatientID,
-                                CID = clinicID,
-                            });
-                            return Created(string.Empty, newBookingId);
-                        }
-                        else { return BadRequest("<!>No available slots for this date<!>"); }
+                    case 2:
+                        return BadRequest("<!>Invalid patient<!>");
 
-                    }
-                    else { return BadRequest("<!>No available slots for this date<!>"); }
+                    case 3:
+                        return BadRequest("<!>No available slots for this date<!>");
+
+                    default:
+                        return StatusCode(500, "<!>Error occured in creating booking, booking did not go through<!>");
                 }
-                
-                else { return BadRequest("<!>Invalid patient<!>"); }
             }
             catch (Exception ex)
             {

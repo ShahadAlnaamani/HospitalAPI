@@ -4,7 +4,9 @@ namespace HospitalAPI.Services
 {
     public interface IBookingService
     {
-        int AddBooking(Booking booking);
+        int AddBooking(DateTime date, string patientName, string clinicSpecialization);
         List<Booking> GetAllBookings();
+        bool PatientExists(string patientName);
+        public int Validation(DateTime date, string patientName, string clinicSpecialization);
     }
 }

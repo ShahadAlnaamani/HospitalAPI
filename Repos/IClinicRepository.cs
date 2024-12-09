@@ -9,5 +9,6 @@ namespace HospitalAPI.Repos
         bool ClinicExists(string Specialization);
         int GetClinicID(string Specialization);
         int GetNextSlot(string Specialization);
+        public Clinic GetClinicByID(int ID);
     }
 }

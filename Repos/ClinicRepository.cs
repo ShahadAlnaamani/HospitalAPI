@@ -55,5 +55,13 @@ namespace HospitalAPI.Repos
             };
 
         }
+
+        public Clinic GetClinicByID(int ID)
+        {
+            Clinic clinic = _context.Clinics.FirstOrDefault(c => c.CID == ID);
+
+            return clinic; 
+
+        }
     }
 }

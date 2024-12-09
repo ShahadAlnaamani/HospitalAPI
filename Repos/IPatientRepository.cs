@@ -8,5 +8,6 @@ namespace HospitalAPI.Repos
         List<Patient> GetAllPatients();
         int GetPatientID(string name);
         bool PatientExists(string name);
+        public Patient GetPatientByName(string name);
     }
 }

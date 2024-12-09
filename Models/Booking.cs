@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HospitalAPI.Models
 {
-    [PrimaryKey(nameof(Date), nameof(SlotNumber))]
+    [PrimaryKey(nameof(Date), nameof(SlotNumber), nameof(CID))]
     public class Booking
     {
-        public DateOnly Date {  get; set; }
+        public DateTime Date {  get; set; }
 
         public int SlotNumber { get; set; }
 

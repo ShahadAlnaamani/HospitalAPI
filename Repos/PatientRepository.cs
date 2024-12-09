@@ -39,5 +39,10 @@ namespace HospitalAPI.Repos
             else return patient.PID;
 
         }
+
+        public Patient GetPatientByName(string name)
+        {
+            return _context.Patients.FirstOrDefault(p=>p.Name == name);
+        }
     }
 }
