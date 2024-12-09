@@ -6,7 +6,6 @@ namespace HospitalAPI.Services
     public class PatientService : IPatientService
     {
         private readonly IPatientRepository _patientRepository;
-        private ApplicationDbContext _context;
 
         public PatientService(IPatientRepository patientRepository)
         {

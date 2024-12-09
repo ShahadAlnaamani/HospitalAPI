@@ -1,6 +1,7 @@
 ﻿using HospitalAPI.Models;
 using HospitalAPI.Repos;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using System.Text.RegularExpressions;
 
 namespace HospitalAPI.Services
@@ -8,7 +9,6 @@ namespace HospitalAPI.Services
     public class ClinicService : IClinicService
     {
         private readonly IClinicRepository _clinicRepository;
-        private ApplicationDbContext _context;
 
         public ClinicService(IClinicRepository clinicRepository)
         {
@@ -47,6 +47,5 @@ namespace HospitalAPI.Services
             }
             return clinics;
         }
-
     }
 }

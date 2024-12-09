@@ -41,54 +41,6 @@ namespace HospitalAPI.Services
             };
 
             return _bookingRepository.Add(booking);
-
-           
-
-            //}
-            //        try
-            //{
-            //    //    PatientRepository patientRepo = new PatientRepository(_context);
-            //    //    ClinicRepository clinicRepo = new ClinicRepository(_context);
-
-            //    if (date >= DateTime.Now) //checks that date is in the future
-            //    {
-
-            //    bool patientExists = _patientRepository.PatientExists(patientName);
-            //    if (patientExists) //found patient
-            //    {
-            //        int PatientID = _patientRepository.GetPatientID(patientName);
-            //        int TotalSlots = _clinicRepository.GetNextSlot(clinicSpecialization);
-
-            //        if (TotalSlots != 0) //found clinic
-            //        {
-            //            //Calculating slot number 
-            //            int clinicID = _clinicRepository.GetClinicID(clinicSpecialization);
-            //            int TakenSlots = _context.Bookings.Count(b => b.CID == clinicID && b.Date == date);
-            //            if (TakenSlots < TotalSlots)
-            //            {
-            //                int SlotNumber = TakenSlots + 1;
-                            
-            //                    var booking = new Booking {
-            //                        Date = date, SlotNumber = SlotNumber, PID = PatientID, CID = clinicID
-            //                    };
-
-            //                    return _bookingRepository.Add(booking);
-            //                }
-            //            else { return BadRequest("<!>No available slots for this date<!>"); }
-
-            //        }
-            //        else { return BadRequest("<!>No available slots for this date<!>"); }
-            //    }
-
-            //    else { return BadRequest("<!>Invalid patient<!>"); }
-            //    }
-            //    else { return BadRequest("<!>Date must be in the future<!>"); };
-
-            //}
-            //catch (Exception ex)
-            //{
-            //    return BadRequest(ex.Message);
-            //}
             
         }
 
@@ -120,7 +72,6 @@ namespace HospitalAPI.Services
 
                         int TakenSlots = _bookingRepository.GetTakenSlots(date, clinicID);
                         
-                        //int TakenSlots = _context.Bookings.Count(b => b.CID == clinicID && b.Date == date);
 
                         if (TakenSlots < TotalSlots)
                         {
